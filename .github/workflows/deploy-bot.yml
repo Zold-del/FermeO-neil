@@ -26,11 +26,7 @@ jobs:
       - name: Create .env file
         working-directory: ./discord-bot
         run: |
-          echo "DISCORD_TOKEN=MTM2NDU4OTk2MzkzNjY2MTUwNQ.Ge9sKu.aBv3csx926yEdRHokJZUvEtbHOMUlVuN-kqmPs" > .env
-          echo "GUILD_ID=1334885430583230580" >> .env
-          echo "CATEGORY_ID=11364741984991973539" >> .env
-          echo "NOTIFICATION_CHANNEL_ID=1364742021042147379" >> .env
-          echo "PORT=3001" >> .env
+          echo "${{ secrets.TOKENBOT }}" > .env
 
       - name: Run Discord bot
         working-directory: ./discord-bot
