@@ -35,4 +35,6 @@ jobs:
       - name: Run Discord bot
         working-directory: ./discord-bot
         run: |
-          node index.js
+          npm install -g pm2
+          pm2 start index.js --name discord-bot
+          pm2 logs --lines 100 --no-daemon
