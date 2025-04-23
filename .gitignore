@@ -1,0 +1,27 @@
+# Fichiers d'environnement contenant des secrets
+.env
+*.env
+
+# Dossiers node_modules
+node_modules/
+
+# Fichiers de log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers système d'exploitation
+.DS_Store
+Thumbs.db
+
+# Fichiers de configuration IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers de build et de cache
+/build/
+/dist/
+/.cache/

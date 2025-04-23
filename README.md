@@ -1,57 +1,70 @@
-# La Ferme O'Neil - Système de Commande GTA RP
+# La Ferme O'Neil - Système de Commande pour GTA RP
 
-Ce projet est un système de commande en ligne pour la Ferme O'Neil dans GTA RP, comprenant un site web pour passer commande et un bot Discord pour gérer les commandes.
+Un système de commande complet pour la Ferme O'Neil dans GTA RP, permettant aux joueurs de commander des produits agricoles et de recevoir des notifications via Discord.
 
-## Structure du Projet
-
-- **website/** - Site web de la Ferme O'Neil
-  - **css/** - Styles CSS du site
-  - **js/** - Scripts JavaScript
-  - **images/** - Images et ressources graphiques
-- **discord-bot/** - Bot Discord pour la gestion des commandes
-
-## Installation et Configuration
-
-### Bot Discord
-
-1. Naviguez vers le dossier du bot Discord
-   ```
-   cd discord-bot
-   ```
-
-2. Installez les dépendances
-   ```
-   npm install
-   ```
-
-3. Configurez le fichier `.env` avec vos identifiants Discord
-   - DISCORD_TOKEN - Token de votre bot Discord
-   - GUILD_ID - ID de votre serveur Discord
-   - CATEGORY_ID - ID de la catégorie pour les commandes
-   - NOTIFICATION_CHANNEL_ID - ID du canal pour les notifications
-
-4. Démarrez le bot
-   ```
-   node index.js
-   ```
-
-### Site Web
-
-1. Ouvrez le fichier `website/index.html` dans votre navigateur
-2. Le site est prêt à être utilisé pour passer des commandes
+![Ferme O'Neil](website/images/background/farm-background.jpg)
 
 ## Fonctionnalités
 
-- **Site Web** : Interface utilisateur permettant aux clients de passer commande
-- **Bot Discord** : Création automatique d'un canal pour chaque commande
-- **Notification** : Alerte dans un canal principal pour chaque nouvelle commande
+- 🌱 Interface web responsive pour passer des commandes
+- 🤖 Bot Discord intégré pour traiter les commandes
+- 📱 Notifications en temps réel via messages privés Discord
+- 📊 Système de gestion des commandes pour les administrateurs
+- 🔄 Suivi d'état des commandes (acceptée, en production, en livraison, terminée)
 
-## Technologies Utilisées
+## Structure du Projet
 
-- HTML/CSS/JavaScript pour le site web
-- Node.js et Discord.js pour le bot Discord
-- Express pour l'API de communication
+- `website/` - Le site web de commande
+- `discord-bot/` - Le bot Discord pour gérer les commandes
+
+## Installation et Configuration
+
+### Prérequis
+- Node.js (v14 ou supérieur)
+- Un compte Discord et un bot configuré
+
+### Configuration du Bot Discord
+
+1. Créez un fichier `.env` dans le dossier `discord-bot/` avec les informations suivantes:
+```
+DISCORD_TOKEN=votre_token_discord
+GUILD_ID=id_de_votre_serveur
+NOTIFICATION_CHANNEL_ID=id_du_canal_de_notification
+```
+
+2. Installez les dépendances:
+```bash
+cd discord-bot
+npm install
+```
+
+3. Démarrez le bot:
+```bash
+node index.js
+```
+Ou utilisez le script fourni `start-bot.bat`.
+
+### Démarrage du Site Web
+
+Ouvrez le fichier `website/index.html` dans votre navigateur ou utilisez le script `open-website.bat`.
+
+## Utilisation
+
+1. Les joueurs remplissent le formulaire de commande sur le site web
+2. Ils fournissent leur ID Discord pour recevoir des notifications
+3. Une fois la commande envoyée, le joueur reçoit un message privé sur Discord avec le récapitulatif
+4. Les administrateurs peuvent gérer les commandes depuis le canal de notification Discord
+5. À chaque changement d'état, le joueur est notifié automatiquement
+
+## Sécurité
+
+- Ne partagez jamais votre token Discord. Il est stocké dans un fichier `.env` qui est ignoré par Git.
+- Assurez-vous que seuls les administrateurs ont accès au canal de notification.
 
 ## Licence
 
-Ce projet est à usage privé pour la Ferme O'Neil dans le cadre de GTA RP.
+© 2025 La Ferme O'Neil - Tous droits réservés
+
+---
+
+*Développé pour améliorer l'expérience RP sur votre serveur GTA*
