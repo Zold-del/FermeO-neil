@@ -1,0 +1,3 @@
+@echo off
+echo Ouverture du site web de la Ferme O'Neil...
+start "" "c:\Users\antho\Downloads\oneil\website\index.html"

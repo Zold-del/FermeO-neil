@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Ferme O'Neil - Produits Frais pour GTA RP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-leaf"></i> La Ferme O'Neil</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Accueil</a></li>
+                    <li><a href="#produits">Produits</a></li>
+                    <li><a href="#commander">Commander</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2 class="fade-in">Produits frais de la ferme</h2>
+            <p class="fade-in">Les meilleurs produits frais et biologiques pour votre expérience GTA RP</p>
+            <a href="#commander" class="btn fade-in">Commander maintenant</a>
+        </div>
+    </section>
+
+    <section id="produits" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nos Produits et Tarifs</h2>
+                <p class="section-subtitle">Tous nos produits sont cultivés avec soin à la Ferme O'Neil</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-icon">🥬</div>
+                    <h3>Salades</h3>
+                    <p class="price">5$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🍅</div>
+                    <h3>Tomates</h3>
+                    <p class="price">5$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🧅</div>
+                    <h3>Oignons</h3>
+                    <p class="price">5$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🥕</div>
+                    <h3>Carottes</h3>
+                    <p class="price">5$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🍓</div>
+                    <h3>Fraises</h3>
+                    <p class="price">8$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🥛</div>
+                    <h3>Lait</h3>
+                    <p class="price">7$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🌽</div>
+                    <h3>Courges</h3>
+                    <p class="price">8$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🌾</div>
+                    <h3>Blé</h3>
+                    <p class="price">6$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🍌</div>
+                    <h3>Bananes</h3>
+                    <p class="price">7$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🌵</div>
+                    <h3>Agaves</h3>
+                    <p class="price">7$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🥔</div>
+                    <h3>Pommes de terres</h3>
+                    <p class="price">6$/U</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🥚</div>
+                    <h3>Œufs</h3>
+                    <p class="price">7$/U</p>
+                </div>
+                <div class="product-card special">
+                    <div class="product-icon">♻️</div>
+                    <h3>Fertilisants</h3>
+                    <p class="price">250$/U</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="decoration">
+        <div class="container">
+            <h3>La qualité depuis des générations</h3>
+        </div>
+    </section>
+
+    <section id="commander" class="order">
+        <div class="container">
+            <div class="section-header">
+                <h2>Commander vos produits</h2>
+                <p class="section-subtitle">Livraison rapide dans tout San Andreas</p>
+            </div>
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="name">Nom RP :</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone :</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="discord">ID Discord :</label>
+                    <input type="text" id="discord" name="discord" placeholder="pseudo#1234" required>
+                </div>
+                
+                <h3>Sélectionnez vos produits :</h3>
+                <div class="order-products">
+                    <!-- Produits à commander avec sélecteur de quantité -->
+                    <div class="order-item">
+                        <label for="salades">Salades (5$/U) :</label>
+                        <input type="number" id="salades" name="salades" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="tomates">Tomates (5$/U) :</label>
+                        <input type="number" id="tomates" name="tomates" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="oignons">Oignons (5$/U) :</label>
+                        <input type="number" id="oignons" name="oignons" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="carottes">Carottes (5$/U) :</label>
+                        <input type="number" id="carottes" name="carottes" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="fraises">Fraises (8$/U) :</label>
+                        <input type="number" id="fraises" name="fraises" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="lait">Lait (7$/U) :</label>
+                        <input type="number" id="lait" name="lait" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="courges">Courges (8$/U) :</label>
+                        <input type="number" id="courges" name="courges" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="ble">Blé (6$/U) :</label>
+                        <input type="number" id="ble" name="ble" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="bananes">Bananes (7$/U) :</label>
+                        <input type="number" id="bananes" name="bananes" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="agaves">Agaves (7$/U) :</label>
+                        <input type="number" id="agaves" name="agaves" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="pommes">Pommes de terres (6$/U) :</label>
+                        <input type="number" id="pommes" name="pommes" min="0" value="0">
+                    </div>
+                    <div class="order-item">
+                        <label for="oeufs">Œufs (7$/U) :</label>
+                        <input type="number" id="oeufs" name="oeufs" min="0" value="0">
+                    </div>
+                    <div class="order-item special">
+                        <label for="fertilisants">Fertilisants (250$/U) :</label>
+                        <input type="number" id="fertilisants" name="fertilisants" min="0" value="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Commentaires supplémentaires :</label>
+                    <textarea id="comments" name="comments" rows="4"></textarea>
+                </div>
+
+                <div class="total-price">
+                    <h3>Total estimé : <span id="total">0</span> $</h3>
+                </div>
+
+                <button type="submit" class="btn">Envoyer la commande</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact</h2>
+            </div>
+            <p>Pour toute question concernant vos commandes, n'hésitez pas à nous contacter :</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p>Téléphone : 555-ONEIL</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-discord"></i>
+                    <p>Discord : Ferme O'Neil</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Adresse : Ferme O'Neil, Grand Senora Desert</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-leaf"></i> La Ferme O'Neil
+                </div>
+                <p class="footer-text">Les meilleurs produits frais pour votre expérience GTA RP</p>
+                <div class="footer-links">
+                    <a href="#">Accueil</a>
+                    <a href="#produits">Produits</a>
+                    <a href="#commander">Commander</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2025 La Ferme O'Neil - Tous droits réservés</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
