@@ -49,6 +49,30 @@ const GUILD_ID = process.env.GUILD_ID; // ID du serveur Discord
 const CATEGORY_ID = process.env.CATEGORY_ID; // ID de la catégorie pour les commandes
 const NOTIFICATION_CHANNEL_ID = process.env.NOTIFICATION_CHANNEL_ID; // ID du canal de notification
 
+// Signal handler pour la gestion de l'arrêt propre du bot
+process.on('SIGINT', () => {
+    console.log('Bot en cours d\'arrêt...');
+    client.destroy();
+    process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+    console.log('Bot en cours d\'arrêt...');
+    client.destroy();
+    process.exit(0);
+});
+
+// Gestion des erreurs non gérées
+process.on('uncaughtException', (error) => {
+    console.error('Erreur non gérée:', error);
+    // Ne pas arrêter le bot pour les erreurs non critiques
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Promesse rejetée non gérée:', reason);
+    // Ne pas arrêter le bot pour les erreurs non critiques
+});
+
 // Connexion du bot Discord
 client.once(Events.ClientReady, () => {
     console.log(`Bot connecté en tant que ${client.user.tag}!`);
@@ -57,6 +81,18 @@ client.once(Events.ClientReady, () => {
 // Gestion des erreurs de connexion
 client.on('error', (error) => {
     console.error('Erreur du bot Discord:', error);
+});
+
+// Fonction de reconnexion en cas de déconnexion
+client.on('disconnected', () => {
+    console.log('Bot déconnecté, tentative de reconnexion...');
+    setTimeout(() => {
+        client.login(process.env.DISCORD_TOKEN).catch(error => {
+            console.error('Erreur lors de la reconnexion:', error);
+            // Réessayer après un délai croissant
+            setTimeout(() => client.login(process.env.DISCORD_TOKEN), 10000);
+        });
+    }, 5000);
 });
 
 // Interception des interactions avec les boutons - utilisation de Events.InteractionCreate
