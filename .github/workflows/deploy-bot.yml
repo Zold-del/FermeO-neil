@@ -10,12 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './discord-bot/package-lock.json'
 
       - name: Install dependencies
         working-directory: ./discord-bot
@@ -29,6 +31,10 @@ jobs:
           echo "CATEGORY_ID=${{ secrets.CATEGORY_ID }}" >> .env
           echo "NOTIFICATION_CHANNEL_ID=${{ secrets.NOTIFICATION_CHANNEL_ID }}" >> .env
 
-      - name: Run Discord bot
+      - name: Run Discord bot with PM2
         working-directory: ./discord-bot
-        run: node index.js
+        run: |
+          npm install -g pm2
+          pm2 start index.js --name discord-bot
+          pm2 save
+          pm2 logs --lines 100
