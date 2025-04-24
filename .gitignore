@@ -1,6 +1,7 @@
-# Fichiers d'environnement contenant des secrets
+# Fichiers d'environnement contenant des données sensibles
 .env
-*.env
+*/.env
+sensitive-data.txt
 
 # Dossiers node_modules
 node_modules/
@@ -11,7 +12,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Fichiers système d'exploitation
+# Fichiers système
 .DS_Store
 Thumbs.db
 
@@ -24,4 +25,9 @@ Thumbs.db
 # Fichiers de build et de cache
 /build/
 /dist/
-/.cache/
+/cache/
+
+# Dossiers de dépendances
+__pycache__/
+*.py[cod]
+*$py.class
