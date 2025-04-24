@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  discord-bot:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./python-bot:/app
+      - bot-data:/app/data
+    environment:
+      - TOKEN=${BOT_TOKEN}
+      - TZ=Europe/Paris
+    env_file:
+      - ./python-bot/.env
+
+volumes:
+  bot-data:

@@ -1,36 +1,93 @@
-name: Deploy and Run Discord Bot
+name: Deploy Discord Bot
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:  # Permet de lancer le workflow manuellement
+    branches: [ main, master ]
+    paths:
+      - 'discord-bot/**'
+      - 'python-bot/**'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
-  deploy-and-run:
+  deploy-js-bot:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.modified, 'discord-bot/') }}
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: discord-bot/package-lock.json
+    
+    - name: Install dependencies
+      run: |
+        cd discord-bot
+        npm ci
+    
+    - name: Run tests
+      run: |
+        cd discord-bot
+        npm test
+      if: hashFiles('discord-bot/package.json') != ''
+    
+    - name: Deploy to server
+      if: success() && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /path/to/deployment/directory
+          git pull
+          cd discord-bot
+          npm ci
+          pm2 restart discord-bot || pm2 start index.js --name discord-bot
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: './discord-bot/package-lock.json'
-
-      - name: Install dependencies
-        working-directory: ./discord-bot
-        run: npm install
-
-      - name: Create .env file
-        working-directory: ./discord-bot
-        run: |
-          echo "${{ secrets.TOKENBOT }}" > .env
-
-      - name: Run Discord bot
-        working-directory: ./discord-bot
-        run: |
-          npm install -g pm2
-          pm2 start index.js --name discord-bot
-          pm2 logs --lines 100 --no-daemon
+  deploy-python-bot:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.modified, 'python-bot/') }}
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        cd python-bot
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install discord.py python-dotenv; fi
+    
+    - name: Run tests
+      run: |
+        cd python-bot
+        if [ -f test_bot.py ]; then python -m pytest test_bot.py; fi
+    
+    - name: Deploy to server
+      if: success() && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /path/to/deployment/directory
+          git pull
+          cd python-bot
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install discord.py python-dotenv; fi
+          if pgrep -f "python bot.py"; then
+            pkill -f "python bot.py"
+          fi
+          nohup python bot.py > bot.log 2>&1 &

@@ -14,6 +14,7 @@
     --background-light: #f9f6f1;
     --background-dark: #30402d;
     --special-color: #c74343;
+    --code-color: #4CAF50;  /* Couleur verte pour le code */
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
@@ -757,6 +758,60 @@ footer::before {
 
 .fade-in {
     animation: fadeIn 1s ease forwards;
+}
+
+/* Styles pour tous les éléments de code */
+code, pre, .code, [class*="code-"] {
+    color: var(--code-color) !important;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+/* Style pour les blocs de code */
+pre, pre code, .code-block {
+    display: block;
+    background-color: rgba(76, 175, 80, 0.1);
+    padding: 12px;
+    border-radius: 5px;
+    border-left: 3px solid var(--code-color);
+    margin: 15px 0;
+    overflow: auto;
+    color: var(--code-color) !important;
+}
+
+/* Style pour le code inline */
+code {
+    padding: 2px 5px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 3px;
+}
+
+/* Style pour les classes CSS */
+.css-class, .class-name, .selector {
+    color: var(--code-color) !important;
+    font-weight: bold;
+}
+
+/* Style pour classes JavaScript */
+.js-class, .class-declaration {
+    color: var(--code-color) !important;
+    font-weight: bold;
+}
+
+/* Style pour classes Python */
+.python-class, .class-definition {
+    color: var(--code-color) !important;
+    font-weight: bold;
+}
+
+/* Style pour toutes les balises de classe dans les exemples de code */
+[class*="class"] {
+    color: var(--code-color) !important;
+}
+
+/* Style pour les mots-clés de classe */
+.keyword-class {
+    color: var(--code-color) !important;
+    font-weight: bold;
 }
 
 /* Responsive */

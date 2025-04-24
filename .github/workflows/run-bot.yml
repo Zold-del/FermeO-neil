@@ -1,0 +1,94 @@
+name: Run Discord Bot
+
+on:
+  # Déclenchement manuel depuis l'interface GitHub
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environnement de déploiement'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+      bot_type:
+        description: 'Type de bot à lancer'
+        required: true
+        default: 'python'
+        type: choice
+        options:
+          - python
+          - javascript
+          - both
+
+jobs:
+  run-python-bot:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.bot_type == 'python' || github.event.inputs.bot_type == 'both' }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        cd python-bot
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install discord.py python-dotenv; fi
+    
+    - name: Create .env file
+      run: |
+        cd python-bot
+        echo "TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}" > .env
+        echo "PREFIX=!" >> .env
+        echo "BOT_STATUS=Ferme O'Neil" >> .env
+        echo "ENV=${{ github.event.inputs.environment }}" >> .env
+    
+    - name: Run Python Bot
+      run: |
+        cd python-bot
+        nohup python bot.py > bot.log 2>&1 &
+        sleep 10
+        cat bot.log
+      env:
+        TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+  
+  run-js-bot:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.bot_type == 'javascript' || github.event.inputs.bot_type == 'both' }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    
+    - name: Install dependencies
+      run: |
+        cd discord-bot
+        npm ci
+    
+    - name: Create .env file (if needed)
+      run: |
+        cd discord-bot
+        echo "TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}" > .env
+        echo "PREFIX=!" >> .env
+        echo "ENV=${{ github.event.inputs.environment }}" >> .env
+    
+    - name: Run JS Bot
+      run: |
+        cd discord-bot
+        node index.js &
+        sleep 10
+      env:
+        TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}

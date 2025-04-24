@@ -17,6 +17,66 @@ document.addEventListener('DOMContentLoaded', function() {
         'fertilisants': 250
     };
 
+    // Faire en sorte que tout le code apparaisse en vert
+    function applyGreenCodeStyling() {
+        // Sélection de tous les éléments qui pourraient contenir du code
+        const codeElements = document.querySelectorAll('code, pre, .code, [class*="code-"]');
+        
+        // Appliquer la couleur verte à tous ces éléments
+        codeElements.forEach(element => {
+            element.style.color = '#4CAF50';
+            element.style.fontFamily = 'Consolas, Monaco, "Courier New", monospace';
+        });
+        
+        // Rechercher tous les éléments qui contiennent "class" dans leur texte pour mettre en vert
+        document.querySelectorAll('*').forEach(element => {
+            if (element.textContent.includes('class') && 
+                (element.tagName === 'PRE' || element.tagName === 'CODE' || 
+                 element.classList.contains('code') || element.textContent.includes('function'))) {
+                
+                // Transformer le texte pour mettre les déclarations de classe en vert
+                const originalText = element.innerHTML;
+                const modifiedText = originalText.replace(
+                    /(\bclass\b|\bClass\b|\bfunction\b|\bFunction\b|\bconst\b|\bnew\b)/g, 
+                    '<span style="color: #4CAF50; font-weight: bold;">$1</span>'
+                );
+                
+                element.innerHTML = modifiedText;
+            }
+        });
+        
+        // Rechercher spécifiquement les exemples de code dans des conteneurs dédiés
+        document.querySelectorAll('.code-example, .tutorial-code, .documentation').forEach(codeBlock => {
+            const originalHtml = codeBlock.innerHTML;
+            
+            // Remplacer les références aux classes et mots-clés par des éléments colorés en vert
+            const enhancedHtml = originalHtml.replace(
+                /(\bclass\b|\bClass\b|\bfunction\b|\bextends\b|\bconstructor\b|\bvar\b|\blet\b|\bconst\b|\breturn\b|\bimport\b|\bexport\b|\bdefault\b)/g,
+                '<span style="color: #4CAF50; font-weight: bold;">$1</span>'
+            );
+            
+            codeBlock.innerHTML = enhancedHtml;
+        });
+    }
+
+    // Exécuter le style de code vert initialement
+    applyGreenCodeStyling();
+    
+    // Observer les changements du DOM pour appliquer le style aux nouveaux éléments
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (mutation.addedNodes.length) {
+                applyGreenCodeStyling();
+            }
+        });
+    });
+    
+    // Configurer l'observateur pour surveiller tout le document
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
     // Animation d'entrée pour les éléments au scroll
     function animateOnScroll() {
         const elementsToAnimate = document.querySelectorAll('.section-header, .product-card, .contact-item, form');
@@ -314,6 +374,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         .notification.info {
             background-color: #3498db;
+        }
+        
+        /* Style pour tous les éléments de code dans les notifications */
+        .notification code, .notification .code {
+            color: #4CAF50 !important;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
         }
     `;
     
